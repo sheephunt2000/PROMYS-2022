@@ -32,6 +32,8 @@
 \usepackage{tikz-cd}
 \usepackage{faktor}
 
+\usepackage{csquotes}
+
 \hypersetup{%
   colorlinks=true,
   linkcolor=blue,
@@ -42,22 +44,23 @@
 \setlength{\parskip}{0.05in}
 
 % Edit these as appropriate
-\newcommand\course{Math 549}
+\newcommand\course{PROMYS 2022}
 \newcommand\hwnumber{11}                  % <-- homework number
 \newcommand\studentname{Stephen Hu}           % <-- NetID of person #1
-\newcommand\NetIDb{RUID: 192000354}           % <-- NetID of person #2 (Comment this line out for problem sets)
+%\newcommand\NetIDb{RUID: 192000354}           % <-- NetID of person #2 (Comment this line out for problem sets)
 
 \pagestyle{fancyplain}
 \headheight 30pt
 \lhead{\studentname}
-\lhead{\studentname\\\NetIDb}                 % <-- Comment this line out for problem sets (make sure you are person #1)
-\chead{\textbf{\Large Problem Set \hwnumber{}}}
+\lhead{\studentname}                 % <-- Comment this line out for problem sets (make sure you are person #1)
+\chead{\textbf{\Large How to Calculate Doomsday}}
 \rhead{\course \\ \today}
 \lfoot{}
 \cfoot{}
 \rfoot{\small\thepage}
-\headsep 1.5em
-\linespread{1.25} % line spacing
+\headsep 1.1em
+\linespread{1.05} % line spacing
+\setlength{\parskip}{5pt}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
@@ -101,29 +104,37 @@
 
 \begin{document}
 
-\section*{Problem 1}
+\section{Motivation}
 
-Note that \(\gamma:[0,2\pi]\to SO(3)\) is defined by \[\gamma(\theta)=\begin{pmatrix}
-	R_\theta & 0 \\
-	0 & 1
-\end{pmatrix},\] where \(R_\theta\) is the rotation matrix by \(\theta\). Then \(\gamma^2=\gamma(2\theta)\). Now if let \(\Gamma:[0,1]\times[0,1]\to SO(3)\) be the function defined by 
-\[\Gamma(s, t)=\begin{cases}
-	\exp(At) & t\in\left[0,\frac{1}{2}\right] \\
-	B(s)\exp(At)B(s)^{-1} & t\in\left[\frac{1}{2},1\right] 
-\end{cases},\]
-where \[
-A=\begin{pmatrix}
-	0 & -4\pi & 0 \\
-	4\pi & 0 & 0 \\
-	0 & 0 & 0
-\end{pmatrix},	
-B(s)=\begin{pmatrix}
-	\dmat{1,R_{\pi+\pi s}}
-\end{pmatrix}.\]
-Then it can be easily verified that this is a homotopy, since \(\Gamma(s,0)=\Gamma(s,1)=I_3\), \(\Gamma(1,t)=\gamma^2\), and \(\Gamma(0,t)\) is the trivial loop. In particular, \(\exp(At)=\gamma^2(t)\), meaning that \[B(0)\exp(At)B(0)^{-1}=\exp(-At).\] 
+When new to a social environment, it's often useful to have some sort of fun party trick or icebreaker you can use. Now, here's an example of something impressive which will wow your friends and your foes alike - after this, you'll be able to calculate the day of the week for any day in history!\footnote{Okay, it's a little more complicated than that. See Section \ref{sec:non-gregorian}.}
 
-\section*{Problem 2}
+\section{The Doomsday algorithm}
 
-Let \(\beta\) be a positive root different from \(\alpha\). Then we can write by definition \[\beta=\sum_{\gamma\in S} m(\gamma)\gamma,\] where \(S\) is the simple root set and \(m(\gamma)\) are all non-negative. Indeed, since \(\beta\neq\alpha\) we have that \(m(\gamma)>0\) for some \(\gamma\). But recall that \(s_\alpha(\beta)=\beta-n_{\alpha,\beta}\alpha\), so if we represent \(s_\alpha(\beta)\) in terms of the basis \(S\), the only coefficients which change is the \(\alpha\) coefficient. In particular this means the \(\gamma\) from earlier is still positive, which means that \(s_\alpha(\beta)\) must be another positive root. 
+There is a long history of algorithms for calculating the day of the week, including some by Lewis Carroll (the author of \textit{Alice in Wonderland}) and Carl Friedrich Gauss, but the algorithm which we will learn is the so-called Doomsday algorithm. It was invented by the late John Conway in 1973, and requires nothing more than some memorization and mental math. 
+
+The main ingredient in this algorithm is Conway's observation that several easy-to-memorize dates all fall on the same day of the week every year, the so called ``doomsdays.'' (Conway had a somewhat eclectic sense of humor.) For instance, 4/4, 6/6, 8/8, 10/10, and 12/12 will always be on the same day of every year, no matter what year you choose. So, given some random year, if we can calculate what day of week Doomsday is on, we can simply count forward or backward to the date we care about. 
+
+We will use several mnemonics to remember the Doomsdays. For sake of convention, we will use the American MM/DD date format. 
+
+For \textbf{even months}: As mentioned above, the even months have their \textbf{double dates}, with \textbf{4/4}, \textbf{6/6}, \textbf{8/8}, \textbf{10/10}, and \textbf{12/12}. For February, it is the last day of the month, i.e. \textbf{2/28} in a normal year and \textbf{2/29} in a leap year. 
+
+For \textbf{odd months}: 
+
+\begin{displayquote}
+	I work from 9 to 5 at the 7-11. 
+\end{displayquote}
+
+Some cultural notes: a 7-11 is a convenience store, and 9 to 5 are typical American work hours. With this, we see that the Doomsdays are \textbf{9/5}, \textbf{5/9}, \textbf{7/11}, and \textbf{11/7}. For January, we remember \textbf{1/3} in a normal year and \textbf{1/4} in leap years, from being on the \textit 3rd for \textit{3} years out of 4 and the \textit 4th every \textit 4 years. For March, we remember Pi Day (\textbf{3/14}) is on Doomsday. 
+
+For instance, let's calculate the day of the week of David's very special day (when he finds out about his NIST crypto submission), \textbf{July 5th, 2022}. Doomsday for 2022 is on Monday, and so July 11th is on a Monday. This means that July 4th is also on a Monday, so July 5th is a \textbf{Tuesday}. 
+
+\section{Calculating Doomsday (for the 21st century)}
+
+Okay, this is all fine and good, but how do we actually calculate the Doomsday given a year? The idea is to memorize the Doomsday for 2000 (\textbf{Tuesday}), which is known as the ``anchor day,'' and calculate the shift to the year we care about. Conway came up with an algorithm for this, but I prefer the simpler ``odd + 11'' method found by Fong and Walters.  
+
+\section{Other calendars}\label{sec:non-gregorian}
+
+\section{Additional reading}
+
 
 \end{document}

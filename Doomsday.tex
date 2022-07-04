@@ -1,0 +1,129 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amscd}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{XCharter}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage[euler-hat-accent]{eulervm}
+\usepackage{eucal}
+\usepackage{beton}
+%\DeclareFontSeriesDefault[rm]{bf}{sbc}
+\usepackage{xparse}
+%\usepackage{comicsans}
+
+\usepackage{polynom}
+
+\usepackage{bm}
+\usepackage[b]{esvect}
+
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{tikz-cd}
+\usepackage{faktor}
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Edit these as appropriate
+\newcommand\course{Math 549}
+\newcommand\hwnumber{11}                  % <-- homework number
+\newcommand\studentname{Stephen Hu}           % <-- NetID of person #1
+\newcommand\NetIDb{RUID: 192000354}           % <-- NetID of person #2 (Comment this line out for problem sets)
+
+\pagestyle{fancyplain}
+\headheight 30pt
+\lhead{\studentname}
+\lhead{\studentname\\\NetIDb}                 % <-- Comment this line out for problem sets (make sure you are person #1)
+\chead{\textbf{\Large Problem Set \hwnumber{}}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+\linespread{1.25} % line spacing
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem*{remark}{Remark}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newcommand\ZZ{\mathbb{Z}}
+\newcommand\NN{\mathbb{N}}
+\newcommand\RR{\mathbb{R}}
+\newcommand\QQ{\mathbb{Q}}
+\newcommand\CC{\mathbb{C}}
+\renewcommand\aa{\alpha}
+\newcommand\bb{\beta}
+\newcommand\cc{\gamma}
+\newcommand\card{\operatorname{card}}
+%\newcommand\rank{\operatorname{rank}}
+\newcommand\im{\operatorname{im}}
+\newcommand\sgn{\operatorname{sgn}}
+%\newcommand\tr{\operatorname{tr}}
+\newcommand\Span{\operatorname{span}}
+\newcommand\Aut{\operatorname{Aut}}
+\newcommand\Hom{\operatorname{Hom}}
+
+\renewcommand{\vec}[1]{\vv{\boldsymbol{#1}}}
+
+\ExplSyntaxOn
+\NewDocumentCommand{\cycle}{ O{\;} m }
+ {
+  (
+  \alec_cycle:nn { #1 } { #2 }
+  )
+ }
+
+\seq_new:N \l_alec_cycle_seq
+\cs_new_protected:Npn \alec_cycle:nn #1 #2
+ {
+  \seq_set_split:Nnn \l_alec_cycle_seq { , } { #2 }
+  \seq_use:Nn \l_alec_cycle_seq { #1 }
+ }
+\ExplSyntaxOff
+
+\begin{document}
+
+\section*{Problem 1}
+
+Note that \(\gamma:[0,2\pi]\to SO(3)\) is defined by \[\gamma(\theta)=\begin{pmatrix}
+	R_\theta & 0 \\
+	0 & 1
+\end{pmatrix},\] where \(R_\theta\) is the rotation matrix by \(\theta\). Then \(\gamma^2=\gamma(2\theta)\). Now if let \(\Gamma:[0,1]\times[0,1]\to SO(3)\) be the function defined by 
+\[\Gamma(s, t)=\begin{cases}
+	\exp(At) & t\in\left[0,\frac{1}{2}\right] \\
+	B(s)\exp(At)B(s)^{-1} & t\in\left[\frac{1}{2},1\right] 
+\end{cases},\]
+where \[
+A=\begin{pmatrix}
+	0 & -4\pi & 0 \\
+	4\pi & 0 & 0 \\
+	0 & 0 & 0
+\end{pmatrix},	
+B(s)=\begin{pmatrix}
+	\dmat{1,R_{\pi+\pi s}}
+\end{pmatrix}.\]
+Then it can be easily verified that this is a homotopy, since \(\Gamma(s,0)=\Gamma(s,1)=I_3\), \(\Gamma(1,t)=\gamma^2\), and \(\Gamma(0,t)\) is the trivial loop. In particular, \(\exp(At)=\gamma^2(t)\), meaning that \[B(0)\exp(At)B(0)^{-1}=\exp(-At).\] 
+
+\section*{Problem 2}
+
+Let \(\beta\) be a positive root different from \(\alpha\). Then we can write by definition \[\beta=\sum_{\gamma\in S} m(\gamma)\gamma,\] where \(S\) is the simple root set and \(m(\gamma)\) are all non-negative. Indeed, since \(\beta\neq\alpha\) we have that \(m(\gamma)>0\) for some \(\gamma\). But recall that \(s_\alpha(\beta)=\beta-n_{\alpha,\beta}\alpha\), so if we represent \(s_\alpha(\beta)\) in terms of the basis \(S\), the only coefficients which change is the \(\alpha\) coefficient. In particular this means the \(\gamma\) from earlier is still positive, which means that \(s_\alpha(\beta)\) must be another positive root. 
+
+\end{document}

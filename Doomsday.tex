@@ -54,7 +54,7 @@
 \lhead{\studentname}
 \lhead{\studentname}                 % <-- Comment this line out for problem sets (make sure you are person #1)
 \chead{\textbf{\Large How to Calculate Doomsday}}
-\rhead{\course \\ \today}
+\rhead{\course}
 \lfoot{}
 \cfoot{}
 \rfoot{\small\thepage}
@@ -62,10 +62,16 @@
 \linespread{1.05} % line spacing
 \setlength{\parskip}{5pt}
 
+\theoremstyle{plain}
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
 \newtheorem*{remark}{Remark}
 \newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{exercise}{Exercise}
+
+\theoremstyle{definition}
+\newtheorem{example}{Example}
+\newtheorem*{reminder}{Reminder}
 
 \newcommand\ZZ{\mathbb{Z}}
 \newcommand\NN{\mathbb{N}}
@@ -108,9 +114,9 @@
 
 When new to a social environment, it's often useful to have some sort of fun party trick or icebreaker you can use. Now, here's an example of something impressive which will wow your friends and your foes alike - after this, you'll be able to calculate the day of the week for any day in history!\footnote{Okay, it's a little more complicated than that. See Section \ref{sec:non-gregorian}.}
 
-\section{The Doomsday algorithm}
+\section{The Doomsday algorithm}\label{sec:leapyear}
 
-There is a long history of algorithms for calculating the day of the week, including some by Lewis Carroll (the author of \textit{Alice in Wonderland}) and Carl Friedrich Gauss, but the algorithm which we will learn is the so-called Doomsday algorithm. It was invented by the late John Conway in 1973, and requires nothing more than some memorization and mental math. 
+There is a long history of algorithms for calculating the day of the week, including some by Lewis Carroll (the author of \textit{Alice in Wonderland}) and Carl Friedrich Gauss, but the algorithm which we will learn is the so-called Doomsday algorithm. It was invented by the late John Conway in 1973, and requires nothing more than some memorization and mental math. He had his computer quiz him with a random date to login, and as a result he got his time down to around two seconds. 
 
 The main ingredient in this algorithm is Conway's observation that several easy-to-memorize dates all fall on the same day of the week every year, the so called ``doomsdays.'' (Conway had a somewhat eclectic sense of humor.) For instance, 4/4, 6/6, 8/8, 10/10, and 12/12 will always be on the same day of every year, no matter what year you choose. So, given some random year, if we can calculate what day of week Doomsday is on, we can simply count forward or backward to the date we care about. 
 
@@ -126,15 +132,78 @@ For \textbf{odd months}:
 
 Some cultural notes: a 7-11 is a convenience store, and 9 to 5 are typical American work hours. With this, we see that the Doomsdays are \textbf{9/5}, \textbf{5/9}, \textbf{7/11}, and \textbf{11/7}. For January, we remember \textbf{1/3} in a normal year and \textbf{1/4} in leap years, from being on the \textit 3rd for \textit{3} years out of 4 and the \textit 4th every \textit 4 years. For March, we remember Pi Day (\textbf{3/14}) is on Doomsday. 
 
-For instance, let's calculate the day of the week of David's very special day (when he finds out about his NIST crypto submission), \textbf{July 5th, 2022}. Doomsday for 2022 is on Monday, and so July 11th is on a Monday. This means that July 4th is also on a Monday, so July 5th is a \textbf{Tuesday}. 
+\begin{reminder}\label{rem:leapyear}
+	In the Gregorian calendar system which we use, leap years are years which are divisible by 4 (e.g. 2020), except if the year was divisible by 100 (e.g. 1700, 1800, and 1900 were NOT leap years), \textit{unless} the year is also divisible by 400 (e.g. 2000 WAS a leap year). 
+\end{reminder}
+
+\begin{example}
+	Let's calculate the day of the week of David's very special day (when he finds out about his NIST crypto submission), \textbf{July 5th, 2022}. Doomsday for 2022 is on Monday, and so July 11th is on a Monday. This means that July 4th is also on a Monday, so July 5th is a \textbf{Tuesday}.
+\end{example} 
 
 \section{Calculating Doomsday (for the 21st century)}
 
-Okay, this is all fine and good, but how do we actually calculate the Doomsday given a year? The idea is to memorize the Doomsday for 2000 (\textbf{Tuesday}), which is known as the ``anchor day,'' and calculate the shift to the year we care about. Conway came up with an algorithm for this, but I prefer the simpler ``odd + 11'' method found by Fong and Walters.  
+Okay, this is all fine and good, but how do we actually calculate the Doomsday given a year? The idea is to memorize the Doomsday for 2000 (\textbf{Tuesday}), which is known as the ``anchor day,'' and calculate the shift to the year we care about. The Doomsday shifts forward one day every year and two days every leap year, but this is tedious to compute the farther into the century we get. Thankfully, there exist algorithms to compute it easier. Conway came up with one, but I prefer the simpler ``odd + 11'' method found by Fong and Walters. As the name suggests, it involves repeated use of the ``odd + 11'' rule. 
+
+The algorithm will involve the use of a running total \(T\). 
+\begin{enumerate}
+	\item Let \(T\) be the last two digits of the year. 
+	\item If \(T\) is odd, add 11. 
+	\item Let \(T=\frac{T}{2}\). 
+	\item If \(T\) is odd, add 11. 
+	\item Let \(T=7-(T\text{ mod } 7)\). 
+	\item Add \(T\) to the anchor day mod 7. 
+\end{enumerate}
+
+\begin{remark}
+	The final step is equivalent to simply subtracting \(T\) from the anchor day mod 7, but counting backward days in your head is harder for me than doing it forward. Do what works better for you. 
+\end{remark}
+
+\begin{example}
+	Let's calculate the Doomsday for 2015. 
+
+	\begin{enumerate}
+		\item Let \(T=15\).
+		\item \(T=15+11=26\). (15 is odd)
+		\item Let \(T=\frac{T}{2}=13\). 
+		\item \(T=13+11=24\). (13 is odd)
+		\item Let \(T=7-(13 \text{ mod } 7)=1\). 
+		\item \(1+\text{Tuesday}=\textbf{Wednesday}\). 
+	\end{enumerate}
+\end{example}
+
+\section{Expanding to different centuries}
+
+This process will work for any century we choose, but we just need to memorize the anchor days. Since the Gregorian calendar repeats every 400 years, we only need to memorize four of them and use modular arithmetic to find the rest. 
+
+\begin{center}
+	\begin{tabular}{l|l}
+	Century   & Anchor day \\ \hline
+	1900-1999 & Wednesday  \\
+	2000-2099 & Tuesday    \\
+	2100-2199 & Sunday     \\
+	2200-2299 & Friday    
+	\end{tabular}
+\end{center}
+
+For most practical purposes, you'll only need to remember Wednesday for the 1900s and Tuesday for the 2000s (that's when people you're likely to meet have their birthdays), but it's good to know the other days. Conway came up with ``We-in-dis-day''\footnote{i.e. ``We in this day'', as most people alive today were born then.}, and Y2K for Tuesday.\footnote{Y2K was a huge panic in 2000 where certain people were scared that the large-scale rollover into the new century would cause a global blackout of technology due to bugs in handling years and lead to a subsequent return to the Dark Ages. No, I'm not making this up.} Unfortunately, I don't have a mnemonic on hand for the other two anchor days, though there is a formula. If \(c\) is the first two digits of the year, then 
+\[\text{anchor day}=\text{Tuesday}+5(c\text{ mod } 4)\text{ mod } 7\]
+
+\begin{example}
+	Let's calculate the day of the week of Emmy Noether's birthday, \textbf{March 23rd, 1882}. The anchor day for the 1800s is Friday, and using the odd + 11 method, we see that the shift is 4 days. So, the Doomsday for 1882 is Tuesday, and thus we know March 14th was a Tuesday. Counting forward we see that March 23rd was a \textbf{Thursday}.
+\end{example}
 
 \section{Other calendars}\label{sec:non-gregorian}
 
-\section{Additional reading}
+A little bit of a history lesson is in order. On January 1st, 45 BCE, the Julian calendar proposed by Julius Caesar went into effect. The way it was set up, it gave an average year length of 365.25 days, slightly longer than the 365.2422 days it actually is. While this doesn't seem like much, this caused the calendar to drift forward a little less than a day a century. By the time the 1500s rolled around, the spring equinox in the Northern Hemisphere was meaningfully behind when it usually was (\(\sim\)March 21st). This was a problem because the date was how Christian churches calculated when Easter was, so Pope Gregory XIII instituted the Gregorian calendar most of the world uses today, with the leap year rule that is found in Section \ref{sec:leapyear}. \textbf{Thursday, October 4th 1582} was followed by \textbf{Friday, October 15 1582}, with ten days missing. So, if you have a date before then, you would need to use the Julian calendar. 
 
+The process for the Julian calendar is very similar to the Gregorian calendar - it's actually \textit{simpler}. If \(c\) is the first two digits of the year, then 
+\[\text{anchor day}=\text{Sunday}+6c\text{ mod } 7.\]
+\begin{example}
+	The anchor day for 1300 is \(\text{Sunday}+ 6=\) Saturday. 
+\end{example}
+The rest of the algorithm procedes as usual - calculate the shift . 
+
+\section{Additional reading}
+This exposition heavily relied upon the Wikipedia article for the Doomsday algorithm, and it is an excellent reference. 
 
 \end{document}

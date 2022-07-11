@@ -130,7 +130,7 @@ For \textbf{odd months}:
 	I work from 9 to 5 at the 7-11.\footnote{Some cultural notes: 7-11 is a convenience store chain, and 9 to 5 are typical American work hours.} 
 \end{displayquote}
 
-With this, we see that the Doomsdays are \textbf{9/5}, \textbf{5/9}, \textbf{7/11}, and \textbf{11/7}. For January, we remember \textbf{1/3} in a normal year and \textbf{1/4} in leap years, from being on the \textit 3rd for \textit{3} years out of 4 and the \textit 4th every \textit 4 years. For March, we remember Pi Day (\textbf{3/14}) is on Doomsday. 
+With this, we see that the Doomsdays are \textbf{9/5}, \textbf{5/9}, \textbf{7/11}, and \textbf{11/7}. For January, we remember \textbf{1/3} in a normal year and \textbf{1/4} in leap years. You can rememeber this as being on the \textit 3rd for \textit{3} years out of 4 and the \textit 4th every \textit 4 years. For March, we remember Pi Day (\textbf{3/14}) is on Doomsday. 
 
 \begin{reminder}\label{rem:leapyear}
 	In the Gregorian calendar system which we use, leap years are years which are divisible by 4 (e.g. 2020), except if the year was divisible by 100 (e.g. 1700, 1800, and 1900 were NOT leap years), \textit{unless} the year is also divisible by 400 (e.g. 2000 WAS a leap year). 
@@ -203,11 +203,11 @@ A little bit of a history lesson is in order. On January 1st, 45 BCE, the Julian
 The process for the Julian calendar is very similar to the Gregorian calendar - it's actually \textit{simpler}. If \(c\) is the first two digits of the year, then 
 \[\text{anchor day}=\text{Sunday}+6c\text{ mod } 7.\]
 \begin{example}
-	The anchor day for 1300 is \(\text{Sunday}+ 6\cdot 3\mod 7=\) Saturday. 
+	The anchor day for 1300 is \(\text{Sunday}+ 6\cdot 3\text{ mod } 7=\) Saturday. 
 \end{example}
-The rest of the algorithm procedes as usual - calculate the shift, and then forward or backward to your desired date. 
+The rest of the algorithm procedes as usual - calculate the shift, and then count forward or backward to your desired date. 
 
 \section{Additional reading}
-This exposition heavily relied upon the Wikipedia article for the Doomsday algorithm, and it is an excellent reference. 
+This exposition heavily relied upon the Wikipedia article for the Doomsday algorithm, and it is an excellent reference. The website \url{http://rudy.ca/doomsday.html} is another good reference, and also covers the ``hand method'' which Conway used (and I do not know). It also contains additional links to still more interesting resources on related topics. 
 
 \end{document}

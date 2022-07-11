@@ -140,6 +140,10 @@ With this, we see that the Doomsdays are \textbf{9/5}, \textbf{5/9}, \textbf{7/1
 	Let's calculate the day of the week of David's very special day (when he finds out about his NIST crypto submission), \textbf{July 5th, 2022}. Doomsday for 2022 is on Monday, and so July 11th is on a Monday. This means that July 4th is also on a Monday, so July 5th is a \textbf{Tuesday}.
 \end{example} 
 
+\begin{remark}
+	It may help to remember that Valentine's Day (2/14), U.S. Independence Day (7/4), and Halloween (10/31) are all on Doomsday. Christmas (12/25) is the day before Doomsday. 
+\end{remark}
+
 \section{Calculating Doomsday (for the 21st century)}
 
 Okay, this is all fine and good, but how do we actually calculate the Doomsday given a year? The idea is to memorize the Doomsday for 2000 (\textbf{Tuesday}), which is known as the ``anchor day,'' and calculate the shift to the year we care about. The Doomsday shifts forward one day every year and two days every leap year, but this is tedious to compute the farther into the century we get. Thankfully, there exist algorithms to compute it easier. Conway came up with one, but I prefer the simpler ``odd + 11'' method found by Fong and Walters. As the name suggests, it involves repeated use of the ``odd + 11'' rule. 
@@ -199,9 +203,9 @@ A little bit of a history lesson is in order. On January 1st, 45 BCE, the Julian
 The process for the Julian calendar is very similar to the Gregorian calendar - it's actually \textit{simpler}. If \(c\) is the first two digits of the year, then 
 \[\text{anchor day}=\text{Sunday}+6c\text{ mod } 7.\]
 \begin{example}
-	The anchor day for 1300 is \(\text{Sunday}+ 6=\) Saturday. 
+	The anchor day for 1300 is \(\text{Sunday}+ 6\cdot 3\mod 7=\) Saturday. 
 \end{example}
-The rest of the algorithm procedes as usual - calculate the shift . 
+The rest of the algorithm procedes as usual - calculate the shift, and then forward or backward to your desired date. 
 
 \section{Additional reading}
 This exposition heavily relied upon the Wikipedia article for the Doomsday algorithm, and it is an excellent reference. 

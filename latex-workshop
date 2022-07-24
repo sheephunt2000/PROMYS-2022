@@ -1,0 +1,16 @@
+\documentclass{article}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{hyperref}
+
+
+\begin{document}
+
+\title{\LaTeX \ Workshop}
+\author{Counselor \LaTeX Committee}
+
+\maketitle
+\tableofcontents
+
+slay promys % your content goes here...
+
+\end{document}
